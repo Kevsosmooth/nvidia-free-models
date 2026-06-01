@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Launcher so you (or an agent) can run `consult ask "..."` from anywhere.
+# Resolves symlinks so it works when linked onto PATH; uses the project venv.
+set -euo pipefail
+SELF="$(readlink -f "${BASH_SOURCE[0]}")"
+DIR="$(cd "$(dirname "$SELF")/.." && pwd)"   # project root (parent of bin/)
+exec env PYTHONPATH="$DIR" "$DIR/.venv/bin/python" -m consult "$@"
