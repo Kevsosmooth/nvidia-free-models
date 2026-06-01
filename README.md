@@ -1,15 +1,65 @@
 # NVIDIA NIM Models — Testing Playground
 
 Hosted models served through NVIDIA's OpenAI-compatible API at
-`https://integrate.api.nvidia.com/v1`. Your API key is free-tier and works with
+`https://integrate.api.nvidia.com/v1`. The API key is free-tier and works with
 any standard OpenAI SDK by just swapping the `base_url`.
 
-## Setup
+---
+
+## Start here (step by step)
+
+### 1. Get your free NVIDIA API key
+
+1. Go to **https://build.nvidia.com** and click **Sign In / Sign Up** (top right).
+   Create a free NVIDIA account (any email works; no credit card).
+2. **Verify your phone number** when asked — NVIDIA requires a one-time SMS code
+   to activate the free tier. Enter your number, type in the code they text you.
+3. Go to **https://build.nvidia.com/settings/api-keys** and click
+   **Generate API Key**. Copy the key — it starts with `nvapi-`.
+   *(Keep it secret, like a password. You can always generate a new one here.)*
+
+What "free" gets you: ~1,000 inference credits to start and ~40 requests/minute —
+plenty for testing and personal projects.
+
+### 2. Install this project
+
+You need **git** and **Python 3.9+** installed. Then, in a terminal:
 
 ```bash
-pip install -r requirements.txt          # openai + python-dotenv
-cp .env.example .env                      # then paste your nvapi-... key (already done here)
+git clone https://github.com/Kevsosmooth/nvidia-free-models.git
+cd nvidia-free-models
+bash setup.sh
 ```
+
+`setup.sh` does everything for you: builds the environment, installs the
+libraries, asks you to paste the API key from step 1 (and saves it safely), and
+turns `consult` and `nimchat` into commands you can run from any folder.
+
+### 3. Try it
+
+```bash
+consult ask "what can you help me with?"
+nimchat "tell me a joke"
+consult models            # list every available model
+```
+
+That's it. The rest of this README is the detailed reference.
+
+<details>
+<summary>Prefer to install by hand (no setup.sh)?</summary>
+
+```bash
+python3 -m venv .venv                       # make an isolated environment
+./.venv/bin/pip install -r requirements.txt # install openai + python-dotenv
+cp .env.example .env                        # then edit .env and paste your nvapi-... key
+ln -sf "$PWD/bin/consult" ~/.local/bin/consult   # optional: make `consult` global
+ln -sf "$PWD/bin/nimchat" ~/.local/bin/nimchat   # optional: make `nimchat` global
+```
+Make sure `~/.local/bin` is on your `PATH`. Without the symlinks, run the tools as
+`./bin/consult ...` / `python chat.py ...`.
+</details>
+
+---
 
 ## Run
 
