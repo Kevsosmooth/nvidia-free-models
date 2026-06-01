@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Quick tester for NVIDIA NIM hosted models.
+"""Quick streaming tester for NVIDIA NIM hosted models.
 
-Usage:
-    python chat.py                                  # chat with the default model
-    python chat.py -m meta/llama-3.3-70b-instruct   # pick a model
-    python chat.py -m deepseek-ai/deepseek-v4-pro "Explain quantum entanglement"
-    python chat.py --list                           # refresh + print all model IDs
-    echo "hi" | python chat.py                       # read prompt from stdin
+Usage (or run it as `nimchat ...` once linked onto PATH):
+    nimchat "Explain quantum entanglement"          # default model (qwen)
+    nimchat -m kimi "write a haiku"                  # short alias
+    nimchat -m meta/llama-3.3-70b-instruct "hi"      # or any full model id
+    nimchat --list                                   # print all model IDs
+    echo "hi" | nimchat                              # read prompt from stdin
 """
 import argparse
 import os
@@ -17,7 +17,15 @@ from openai import OpenAI
 
 load_dotenv()
 
-DEFAULT_MODEL = "deepseek-ai/deepseek-v4-pro"
+# Short aliases for the handful you'll actually type (mirrors consult).
+ALIASES = {
+    "qwen": "qwen/qwen3.5-397b-a17b",
+    "kimi": "moonshotai/kimi-k2.6",
+    "llama": "meta/llama-3.3-70b-instruct",
+    "fast": "meta/llama-3.1-8b-instruct",
+    "deepseek": "deepseek-ai/deepseek-v4-flash",
+}
+DEFAULT_MODEL = "qwen"  # deepseek-v4-pro does not stream on the free tier; qwen is the tested best
 
 
 def make_client() -> OpenAI:
@@ -77,8 +85,9 @@ def main() -> None:
     if not prompt:
         sys.exit("No prompt given.")
 
-    print(f"--- {args.model} ---")
-    chat(client, args.model, prompt, args.no_think)
+    model = ALIASES.get(args.model, args.model)
+    print(f"--- {model} ---")
+    chat(client, model, prompt, args.no_think)
 
 
 if __name__ == "__main__":

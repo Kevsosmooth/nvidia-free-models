@@ -13,12 +13,19 @@ cp .env.example .env                      # then paste your nvapi-... key (alrea
 
 ## Run
 
+`chat.py` is the simple streaming tester. It's linked onto PATH as `nimchat`
+(named to avoid the system `chat` command), so you can run it from anywhere:
+
 ```bash
-python chat.py "Tell me a joke"                              # default = deepseek-v4-pro
-python chat.py -m meta/llama-3.3-70b-instruct "Hi"           # pick any model below
-python chat.py -m deepseek-ai/deepseek-v4-pro --no-think "2+2?"   # turn off reasoning
-python chat.py --list                                        # refresh the full live list
+nimchat "Tell me a joke"                       # default model (qwen3.5)
+nimchat -m kimi "Hi"                           # short alias: qwen kimi llama fast deepseek
+nimchat -m meta/llama-3.3-70b-instruct "Hi"    # or any full model id
+nimchat --no-think "2+2?"                      # turn off reasoning trace
+nimchat --list                                 # print the full live model list
+# (or call it directly: python chat.py "...")
 ```
+
+To (re)create the link: `ln -sf "$PWD/bin/nimchat" ~/.local/bin/nimchat`.
 
 The script streams output token-by-token. `--no-think` sends
 `extra_body={"chat_template_kwargs":{"thinking":False}}` — only meaningful on
