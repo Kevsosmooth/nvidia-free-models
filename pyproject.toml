@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nvidia-free-models"
+version = "0.1.0"
+description = "consult CLI + testers for NVIDIA's free OpenAI-compatible models"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "openai>=1.0.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+vision = ["pillow>=10.0.0"]   # only needed for vision.py
+
+[project.scripts]
+consult = "consult.cli:main"
+nimchat = "chat:main"
+
+[tool.setuptools]
+packages = ["consult"]
+py-modules = ["chat"]

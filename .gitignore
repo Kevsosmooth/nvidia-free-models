@@ -5,3 +5,6 @@ __pycache__/
 venv/
 models_raw.json
 CLAUDE.md
+*.egg-info/
+build/
+dist/

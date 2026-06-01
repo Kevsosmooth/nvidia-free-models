@@ -12,10 +12,11 @@ import argparse
 import os
 import sys
 
-from dotenv import load_dotenv
+from dotenv import find_dotenv, load_dotenv
 from openai import OpenAI
 
-load_dotenv()
+load_dotenv()  # repo .env when run from source
+load_dotenv(find_dotenv(usecwd=True), override=False)  # also a .env in the current dir (pip installs)
 
 # Short aliases for the handful you'll actually type (mirrors consult).
 ALIASES = {

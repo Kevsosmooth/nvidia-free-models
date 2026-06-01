@@ -11,9 +11,10 @@ import time
 
 import openai
 from openai import OpenAI
-from dotenv import load_dotenv
+from dotenv import find_dotenv, load_dotenv
 
-load_dotenv()
+load_dotenv()  # repo .env when run from source (python-dotenv walks up from this file)
+load_dotenv(find_dotenv(usecwd=True), override=False)  # also a .env in the current dir (pip installs)
 
 # Friendly aliases -> full model ids. Picks come from this project's own testing
 # (see CLAUDE.md): qwen3.5 = best-calibrated default, kimi = broad second opinion.

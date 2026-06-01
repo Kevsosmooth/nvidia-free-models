@@ -21,19 +21,40 @@ any standard OpenAI SDK by just swapping the `base_url`.
 What "free" gets you: ~1,000 inference credits to start and ~40 requests/minute —
 plenty for testing and personal projects.
 
-### 2. Install this project
+### 2. Install it
 
-You need **git** and **Python 3.9+** installed. Then, in a terminal:
+Pick one method. Both need **Python 3.9+**.
 
+**Method A — the easy way (recommended).** Uses `setup.sh`, which does everything:
+builds the environment, installs the libraries, asks you to paste the key from
+step 1 (saved safely), and makes `consult` + `nimchat` runnable from any folder.
+
+*With git:*
 ```bash
 git clone https://github.com/Kevsosmooth/nvidia-free-models.git
 cd nvidia-free-models
 bash setup.sh
 ```
 
-`setup.sh` does everything for you: builds the environment, installs the
-libraries, asks you to paste the API key from step 1 (and saves it safely), and
-turns `consult` and `nimchat` into commands you can run from any folder.
+*No git installed?* Download the ZIP instead — on the repo page click the green
+**Code** button → **Download ZIP** (or open
+`https://github.com/Kevsosmooth/nvidia-free-models/archive/refs/heads/main.zip`),
+unzip it, then:
+```bash
+cd nvidia-free-models-main
+bash setup.sh
+```
+
+**Method B — pip install (for developers).** Installs `consult` and `nimchat` as
+real commands in your Python environment:
+```bash
+pip install git+https://github.com/Kevsosmooth/nvidia-free-models.git
+# from a local clone instead:  pip install .        (add -e for editable)
+# with the image tool too:     pip install ".[vision]"
+export NVIDIA_API_KEY=nvapi-your-key-here   # or keep a .env in the folder you run from
+```
+With this method you provide the key as an environment variable (or a `.env` in
+your working directory) — there's no `setup.sh` prompt.
 
 ### 3. Try it
 
